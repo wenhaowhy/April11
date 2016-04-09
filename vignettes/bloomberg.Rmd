@@ -5,7 +5,11 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-library(bloomberg)
+library(April11)
+library(ggplot2)
+library(stringr)
+library(readxl)
+library(dplyr)
 ```
 
 ## Introduction

@@ -1,14 +1,14 @@
 Package: April11
 Type: Package
-Title: Bloomberg Index Data
-Version: 0.1.0
+Title: Bloomberg World Index Data
+Version: 0.1-1
+Imports: dplyr,
+    ggplot2,
+    readxl,
+    stringr
 Author: David Kane
 Maintainer: David Kane <dave.kane@gail.com>
 Description: Example package which includes Blomberg World Index data, 
   some functions for working with it, and a vignette.
 License: GPL-3
 LazyData: TRUE
-Imports: dplyr,
-    ggplot2,
-    readxl,
-    stringr

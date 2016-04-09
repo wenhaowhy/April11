@@ -3,9 +3,8 @@
 #' @param year Numeric value of the year of the file you want to read in.
 #'
 #' @return A data frame with selected variables.
+#' @import dplyr readxl ggplot2 stringr
 #' @export
-#'
-#' @examples x <- process_bloomberg_file(2005)
 
 process_bloomberg_file <- function(year){
 

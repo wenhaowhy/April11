@@ -15,7 +15,4 @@ A data frame with selected variables.
 \description{
 Process Bloomberg File
 }
-\examples{
-x <- process_bloomberg_file(2005)
-}
 
