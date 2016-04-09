@@ -1,6 +1,10 @@
-process_bloomberg_file <- function(file){
+process_bloomberg_file <- function(year){
 
-  x <- read_excel(file)
+  file.name <- paste0(year, "_a.xlsx")
+  
+  path.to.file <- system.file(paste0("extdata/", file.name), package = "April11")
+  
+  x <- read_excel(path.to.file)
   x$date <- as.Date(x$Date)
   x$figi <- x$FIGI
   x$ticker <- x[, 7] %>% .$Ticker

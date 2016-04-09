@@ -8,3 +8,7 @@ Description: Example package which includes Blomberg World Index data,
   some functions for working with it, and a vignette.
 License: GPL-3
 LazyData: TRUE
+Imports: dplyr,
+    ggplot2,
+    readxl,
+    stringr
