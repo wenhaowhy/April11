@@ -15,13 +15,13 @@ This document explores a sample of Bloomberg Index data.
 <!-- Read in all the data -->
 
 ```{r, cache=TRUE}
-x.2005 <- process_bloomberg_file("~/Desktop/2005_a.xlsx")
-x.2007 <- process_bloomberg_file("~/Desktop/2007_a.xlsx")
-x.2008 <- process_bloomberg_file("~/Desktop/2008_a.xlsx")
-x.2010 <- process_bloomberg_file("~/Desktop/2010_a.xlsx")
-x.2012 <- process_bloomberg_file("~/Desktop/2012_a.xlsx")
-x.2013 <- process_bloomberg_file("~/Desktop/2013_a.xlsx")
-x.2016 <- process_bloomberg_file("~/Desktop/2016_a.xlsx")
+x.2005 <- process_bloomberg_file(2005)
+x.2007 <- process_bloomberg_file(2007)
+x.2008 <- process_bloomberg_file(2008)
+x.2010 <- process_bloomberg_file(2010)
+x.2012 <- process_bloomberg_file(2012)
+x.2013 <- process_bloomberg_file(2013)
+x.2016 <- process_bloomberg_file(2016)
 
 
 x <- rbind(x.2005, x.2007, x.2008, x.2010, x.2012, x.2013, x.2016)
