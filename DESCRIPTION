@@ -1,10 +1,10 @@
 Package: April11
 Type: Package
-Title: Show Students an Example Package
+Title: Bloomberg Index Data
 Version: 0.1.0
 Author: David Kane
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: Shows an example package. Alas, R CMD check requires that this go
-  at least one line.
+Maintainer: David Kane <dave.kane@gail.com>
+Description: Example package which includes Blomberg World Index data, 
+  some functions for working with it, and a vignette.
 License: GPL-3
 LazyData: TRUE

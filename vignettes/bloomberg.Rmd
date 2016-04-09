@@ -1,0 +1,110 @@
+---
+title: "Exploring Bloomberg Index Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(readr)
+library(readxl)
+library(bloomberg)
+```
+
+## Introduction
+
+This document explores a sample of Bloomberg Index data.
+
+<!-- Read in all the data -->
+
+```{r, cache=TRUE}
+x.2005 <- process_bloomberg_file("~/Desktop/2005_a.xlsx")
+x.2007 <- process_bloomberg_file("~/Desktop/2007_a.xlsx")
+x.2008 <- process_bloomberg_file("~/Desktop/2008_a.xlsx")
+x.2010 <- process_bloomberg_file("~/Desktop/2010_a.xlsx")
+x.2012 <- process_bloomberg_file("~/Desktop/2012_a.xlsx")
+x.2013 <- process_bloomberg_file("~/Desktop/2013_a.xlsx")
+x.2016 <- process_bloomberg_file("~/Desktop/2016_a.xlsx")
+
+
+x <- rbind(x.2005, x.2007, x.2008, x.2010, x.2012, x.2013, x.2016)
+```
+
+
+
+Consider a basic summary of all this data.
+
+```{r}
+summary(x)
+my.date <- as.Date("2016-01-05")
+y <- subset(x.2016, date %in% my.date)
+```
+
+To make things simple, we will just look at the data for `r my.date`. On this date, there are `r nrow(y)` in the index. The sum of the weights is `r sum(y$weight)`. The company with the biggest weight (`r round(y$weight[which.max(y$weight)], 2)`) is `r y$name[which.max(y$weight)]`. Here are the 10 most common exchanges.
+
+```{r}
+ head(sort(table(y$exchange), decreasing = TRUE), n = 10)
+```
+There are `r sum(duplicated(y$ticker))` duplicate tickers, `r sum(duplicated(y$name))` duplicate names and `r sum(duplicated(y$figi))` duplicate FIGI. Duplicate ticker make sense since the same ticker may be used on multiple exchanges. Example:
+
+```{r}
+y[y$ticker %in% "SUN",]
+```
+Duplicate names are also possible because of dual listings, multiple share classes and the like. Examples:
+
+
+```{r}
+y[str_detect(y$name, "STORA ENSO"),]
+```
+
+But FIGIs are supposed to be unique! I am not sure how this could happen.
+
+```{r}
+y[y$figi %in% "BBG000CCLR60",]
+```
+Let's take a closer look at the data. Consider the three biggest companies on each of the six most common exchanges.
+
+```{r}
+y <- tbl_df(y) %>% group_by(exchange)
+main.exchanges <- names(tail(sort(table(y$exchange)), n = 6))
+filter(y, exchange %in% main.exchanges) %>% 
+  filter(min_rank(desc(weight)) <= 3) %>% 
+  arrange(exchange, desc(weight)) %>% 
+  select(-date, - figi)
+```
+
+
+Interesting to look at a plot of average weight against sum of the weight by exchange.
+
+```{r}
+y %>%  group_by(exchange) %>% 
+      summarize(s_weight = sum(weight), m_weight = mean(weight)) %>%  
+  ggplot(aes(m_weight, s_weight, label = exchange)) + 
+  geom_text(check_overlap = TRUE) + 
+  ggtitle("Average Versus Total Weight by Exchange") + 
+  xlab("Average Weight") + ylab("Total Weight")
+```
+
+
+What is the relationship between the logarithm of weight and price across the different exchanges? There are two many exchanges to examine this in each one, so we create a new variable which is the actual exchange for the 7 biggest and then assign all other companies to "ZZ."
+
+```{r}
+z <- y
+main.exchanges <- names(tail(sort(table(y$exchange)), n = 7))
+z$exchange.2 <- ifelse(z$exchange %in% main.exchanges, z$exchange, "ZZ")
+ggplot(data = z, aes(log(price), log(weight), color = exchange.2)) + geom_point()
+```
+
+Maybe using a panel plot will make the differences more clear.
+
+```{r}
+ggplot(data = z, aes(log(price), log(weight))) + facet_wrap(~exchange.2) + geom_point()
+```
+
+
+
+
+
+
