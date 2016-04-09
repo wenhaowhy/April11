@@ -1,9 +1,10 @@
 Package: April11
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Show Students an Example Package
 Version: 0.1.0
-Author: Who wrote it
+Author: David Kane
 Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Description: Shows an example package. Alas, R CMD check requires that this go
+  at least one line.
+License: GPL-3
 LazyData: TRUE
