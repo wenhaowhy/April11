@@ -1,6 +1,6 @@
 ---
-title: "Exploring Bloomberg Index Data"
-output: html_document
+title: "Exploring Bloomberg Index Data changes man"
+output: md_document
 ---
 
 ```{r setup, include=FALSE}
